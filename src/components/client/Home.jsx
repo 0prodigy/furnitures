@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Product from "./Product";
 import { ProductContext } from "../../context/ProductContext";
 import SingleProduct from "./SingleProduct";
+import { Component } from "react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -34,80 +35,106 @@ const Title = styled.div`
   }
 `;
 
-function Home() {
-  return (
-    <>
-      <Wrapper>
-        <Sidebar></Sidebar>
-        <Banner />
-      </Wrapper>
-      <SingleProduct />
-      <ProductContext.Consumer>
-        {(value) => (
-          <div>
-            <Title>
-              <h1>Chairs</h1>
-              <p>We provide world best wooden chair all over the world</p>
-            </Title>
-            <Products>
-              {value.products.map((product) =>
-                product.fields["Type"] === "Chairs" ? (
-                  <Product
-                    key={product.id}
-                    name={product.fields["Name"]}
-                    type={product.fields["Type"]}
-                    img={product.fields.Images[0].url}
-                    price={"$ " + product.fields["Unit cost"]}
-                  />
-                ) : (
-                  ""
-                )
-              )}
-            </Products>
-            <Title>
-              <h1>Lighting</h1>
-              <p>Live the life in lighting</p>
-            </Title>
-            <Products>
-              {value.products.map((product) =>
-                product.fields["Type"] === "Lighting" ? (
-                  <Product
-                    key={product.id}
-                    name={product.fields["Name"]}
-                    type={product.fields["Type"]}
-                    img={product.fields.Images[0].url}
-                    price={"$ " + product.fields["Unit cost"]}
-                  />
-                ) : (
-                  ""
-                )
-              )}
-            </Products>
-            <Title>
-              <h1>Other</h1>
-              <p>
-                We provide varity range of best furnitures all over the world
-              </p>
-            </Title>
-            <Products>
-              {value.products.map(
-                (product) =>
-                  product.fields["Type"] !== ("Chairs" || "Lighting") && (
+class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      singleProduct: false,
+      product: {},
+    };
+  }
+
+  updateProduct = (product) => {
+    this.setState({ product: product, singleProduct: true });
+  };
+  render() {
+    return (
+      <>
+        <Wrapper>
+          <Sidebar></Sidebar>
+          {this.state.singleProduct ? (
+            <SingleProduct data={this.state.product} />
+          ) : (
+            <Banner />
+          )}
+        </Wrapper>
+
+        <ProductContext.Consumer>
+          {(value) => (
+            <div>
+              <Title>
+                <h1>Chairs</h1>
+                <p>We provide world best wooden chair all over the world</p>
+              </Title>
+              <Products>
+                {value.products.map((product) =>
+                  product.fields["Type"] === "Chairs" ? (
                     <Product
                       key={product.id}
+                      id={product.id}
                       name={product.fields["Name"]}
                       type={product.fields["Type"]}
                       img={product.fields.Images[0].url}
                       price={"$ " + product.fields["Unit cost"]}
+                      handleClick={this.updateProduct}
+                      data={product}
                     />
+                  ) : (
+                    ""
                   )
-              )}
-            </Products>
-          </div>
-        )}
-      </ProductContext.Consumer>
-    </>
-  );
+                )}
+              </Products>
+              <Title>
+                <h1>Lighting</h1>
+                <p>Live the life in lighting</p>
+              </Title>
+              <Products>
+                {value.products.map((product) =>
+                  product.fields["Type"] === "Lighting" ? (
+                    <Product
+                      key={product.id}
+                      id={product.id}
+                      name={product.fields["Name"]}
+                      type={product.fields["Type"]}
+                      img={product.fields.Images[0].url}
+                      price={"$ " + product.fields["Unit cost"]}
+                      handleClick={this.updateProduct}
+                      data={product}
+                    />
+                  ) : (
+                    ""
+                  )
+                )}
+              </Products>
+              <Title>
+                <h1>Other</h1>
+                <p>
+                  We provide varity range of best furnitures all over the world
+                </p>
+              </Title>
+              <Products>
+                {value.products.map(
+                  (product) =>
+                    product.fields["Type"] !== ("Chairs" || "Lighting") && (
+                      <Product
+                        key={product.id}
+                        id={product.id}
+                        name={product.fields["Name"]}
+                        type={product.fields["Type"]}
+                        img={product.fields.Images[0].url}
+                        price={"$ " + product.fields["Unit cost"]}
+                        handleClick={this.updateProduct}
+                        data={product}
+                      />
+                    )
+                )}
+              </Products>
+            </div>
+          )}
+        </ProductContext.Consumer>
+      </>
+    );
+  }
 }
 
 export default Home;

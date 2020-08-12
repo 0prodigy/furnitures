@@ -35,23 +35,25 @@ const Wrapper = styled.div`
 `;
 
 function Product(props) {
-  const { name, img, type, price } = props;
+  const { name, img, type, price, data, handleClick } = props;
   return (
     <Wrapper>
       <div>
-        <div className="img-container">
-          <img src={img} alt={name} />
-        </div>
-        <div className="details">
-          <div className="left">
-            <h5>{name}</h5>
-            <p>{type}</p>
+        <a href="/#" onClick={() => handleClick(data)}>
+          <div className="img-container">
+            <img src={img} alt={name} />
           </div>
-          <div className="right">
-            <p>{price}</p>
+          <div className="details">
+            <div className="left">
+              <h5>{name}</h5>
+              <p>{type}</p>
+            </div>
+            <div className="right">
+              <p>{price}</p>
+            </div>
+            <div className="clear"></div>
           </div>
-          <div className="clear"></div>
-        </div>
+        </a>
       </div>
     </Wrapper>
   );

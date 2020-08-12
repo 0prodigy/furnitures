@@ -5,7 +5,6 @@ const Wrapper = styled.div`
   display: flex;
 
   .img-container {
-    background: url("img/greenchair.PNG");
     flex: 50%;
   }
 
@@ -81,13 +80,82 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function SingleProduct(props) {
-  const { data } = props;
+const Nav = styled.div`
+  background: #f2f1ef;
+  .nav {
+    padding: 30px;
+    display: flex;
+    justify-content: space-around;
 
+    ul {
+      display: flex;
+      list-style: none;
+
+      a {
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1rem;
+        color: #19301c;
+        display: inline-block;
+        margin-right: 20px;
+      }
+    }
+  }
+`;
+
+export default function SingleProduct(props) {
+  let { data } = props;
+  data = data.fields;
+  console.log(data);
   return (
-    <>
+    <div>
+      <Nav>
+        <div className="nav">
+          <div className="left">
+            <ul>
+              <li>
+                <a href="/#">products</a>
+              </li>
+              <li>
+                <a href="/#">about</a>
+              </li>
+              <li>
+                <a href="/#">terms</a>
+              </li>
+              <li>
+                <a href="/#">designers</a>
+              </li>
+            </ul>
+          </div>
+          <div className="right">
+            <ul>
+              <li>
+                <a href="/#">
+                  <img src="img/search.PNG" alt="search" />
+                </a>
+              </li>
+              <li>
+                <a href="/#">
+                  <img src="img/user.PNG" alt="user" />
+                </a>
+              </li>
+              <li>
+                <a href="/#">
+                  <img src="img/cart.PNG" alt="cart" />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </Nav>
       <Wrapper>
-        <div className="img-container"></div>
+        <div
+          className="img-container"
+          style={{
+            background:
+              "url(" + data.Images[0].url || "img/greenchair.PNG" + ")",
+          }}
+        ></div>
         <div className="product-description">
           <div className="felx">
             <div className="breadcrumb">
@@ -98,32 +166,31 @@ export default function SingleProduct(props) {
               <a href="/#">Payment</a>
             </div>
           </div>
-          <h3>{"Wooden Chair"}</h3>
+          <h3>{data["Name"]}</h3>
           <p>
-            {
-              "This is some long description if something goes wrong this description distract reader because people tend to read less and see more!! And i feel smart doing this"
-            }
+            {data["Description"] ||
+              "This is some long description if something goes wrong this description distract reader because people tend to read less and see more!! And i feel smart doing this"}
           </p>
           <div className="meta-container">
             <div className="meta">
               <h4>Size</h4>
-              <p>85 x 70 x 75</p>
+              <p>{data["Size (WxLxH)"]}</p>
             </div>
             <div className="meta">
-              <h4>Material</h4>
-              <p>Fabric Form, wood</p>
+              <h4>Materials</h4>
+              <p>{data["Materials"]}</p>
             </div>
             <div className="meta">
-              <h4>Shipping</h4>
-              <p>Europe, Asia</p>
+              <h4>Type</h4>
+              <p>{data["Type"]}</p>
             </div>
             <div className="meta">
-              <h4>Size</h4>
-              <p>85 x 70 x 75</p>
+              <h4>Settings</h4>
+              <p>{data["Settings"]}</p>
             </div>
             <div className="meta">
-              <h4>Material</h4>
-              <p>Fabric Form, wood</p>
+              <h4>Color</h4>
+              <p>{data["Color"]}</p>
             </div>
             <div className="meta">
               <h4>Shipping</h4>
@@ -131,11 +198,11 @@ export default function SingleProduct(props) {
             </div>
           </div>
           <div className="checkout">
-            <button className="btn-light">$222.99</button>
+            <button className="btn-light">$ {data["Unit cost"]}</button>
             <button className="btn-dark">Add To Cart</button>
           </div>
         </div>
       </Wrapper>
-    </>
+    </div>
   );
 }
