@@ -3,13 +3,15 @@ import Sidebar from "./Sidebar";
 import Banner from "./Banner";
 import styled from "styled-components";
 import Product from "./Product";
+import { ProductContext } from "../../context/ProductContext";
 
 const Wrapper = styled.div`
   display: flex;
 `;
 const Products = styled.div`
   display: flex;
-  flex-wrap: warp;
+  flex-wrap: wrap;
+  align-items: center;
   padding: 20px;
   max-width: 1100px;
   margin: auto;
@@ -42,14 +44,21 @@ function Home() {
         <h1>Chairs</h1>
         <p>We provide world best wooden chair all over the world</p>
       </Title>
-      <Products>
-        <Product
-          name="Wooden Chair"
-          type="Chair"
-          img="img/greenchair.PNG"
-          price="343"
-        />
-      </Products>
+      <ProductContext.Consumer>
+        {(value) => (
+          <Products>
+            {value.products.map((product) => (
+              <Product
+                key={product.id}
+                name={product.fields["Name"]}
+                type={product.fields["Type"]}
+                img={product.fields.Images[0].url}
+                price={"$ " + product.fields["Unit cost"]}
+              />
+            ))}
+          </Products>
+        )}
+      </ProductContext.Consumer>
     </>
   );
 }
