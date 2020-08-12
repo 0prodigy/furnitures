@@ -38,9 +38,9 @@ const CardWrap = styled.div`
 `;
 
 function Procard(props) {
-  const { img, label, stats, background } = props;
+  const { img, label, stats, background, color } = props;
   return (
-    <CardWrap style={{ background: background || "#898eca" }}>
+    <CardWrap style={{ background: background || "#898eca", color: color }}>
       <div className="img-container">
         <img src={img} alt={label} />
       </div>

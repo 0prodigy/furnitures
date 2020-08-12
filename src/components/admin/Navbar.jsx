@@ -7,7 +7,7 @@ const NavWrapper = styled.div`
   flex-direction: column;
   padding: 20px 30px;
   border-right: 1px solid #dcdcdc;
-  max-width: 200px;
+  width: 235px;
 `;
 
 const Logo = styled.div`
