@@ -6,6 +6,7 @@ import TopProducts from "./TopProducts";
 import Rightnav from "./Rightnav";
 import Procard from "./Procard";
 import ProductForm from "./ProductForm";
+import VendorForm from "./VendorForm";
 
 const Wrapper = styled.div`
   display: flex;
@@ -70,7 +71,8 @@ function Dashboard() {
             color="#fff"
           />
         </Grid>*/}
-        <ProductForm />
+        {/* <ProductForm /> */}
+        <VendorForm />
       </MainContent>
       <Dashright>
         <Rightnav />
