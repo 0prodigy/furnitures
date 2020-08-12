@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import SearchBar from "./SearchBar";
 import styled from "styled-components";
 import TopProducts from "./TopProducts";
+import Rightnav from "./Rightnav";
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,6 +32,7 @@ function Dashboard() {
         <SearchBar />
       </MainContent>
       <Dashright>
+        <Rightnav />
         <TopProducts />
       </Dashright>
     </Wrapper>
