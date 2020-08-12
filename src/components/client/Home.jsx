@@ -40,23 +40,69 @@ function Home() {
         <Sidebar></Sidebar>
         <Banner />
       </Wrapper>
-      <Title>
-        <h1>Chairs</h1>
-        <p>We provide world best wooden chair all over the world</p>
-      </Title>
+
       <ProductContext.Consumer>
         {(value) => (
-          <Products>
-            {value.products.map((product) => (
-              <Product
-                key={product.id}
-                name={product.fields["Name"]}
-                type={product.fields["Type"]}
-                img={product.fields.Images[0].url}
-                price={"$ " + product.fields["Unit cost"]}
-              />
-            ))}
-          </Products>
+          <div>
+            <Title>
+              <h1>Chairs</h1>
+              <p>We provide world best wooden chair all over the world</p>
+            </Title>
+            <Products>
+              {value.products.map((product) =>
+                product.fields["Type"] === "Chairs" ? (
+                  <Product
+                    key={product.id}
+                    name={product.fields["Name"]}
+                    type={product.fields["Type"]}
+                    img={product.fields.Images[0].url}
+                    price={"$ " + product.fields["Unit cost"]}
+                  />
+                ) : (
+                  ""
+                )
+              )}
+            </Products>
+            <Title>
+              <h1>Lighting</h1>
+              <p>Live the life in lighting</p>
+            </Title>
+            <Products>
+              {value.products.map((product) =>
+                product.fields["Type"] === "Lighting" ? (
+                  <Product
+                    key={product.id}
+                    name={product.fields["Name"]}
+                    type={product.fields["Type"]}
+                    img={product.fields.Images[0].url}
+                    price={"$ " + product.fields["Unit cost"]}
+                  />
+                ) : (
+                  ""
+                )
+              )}
+            </Products>
+            <Title>
+              <h1>Other</h1>
+              <p>
+                We provide varity range of best furnitures all over the world
+              </p>
+            </Title>
+            <Products>
+              {value.products.map(
+                (product) =>
+                  product.fields["Type"] !== ("Chairs" || "Lighting") && (
+                    <Product
+                      key={product.id}
+                      name={product.fields["Name"]}
+                      type={product.fields["Type"]}
+                      img={product.fields.Images[0].url}
+                      price={"$ " + product.fields["Unit cost"]}
+                    />
+                  )
+              )}
+            </Products>
+          </div>
         )}
       </ProductContext.Consumer>
     </>
