@@ -2,14 +2,24 @@ import React from "react";
 import Navbar from "./Navbar";
 import SearchBar from "./SearchBar";
 import styled from "styled-components";
-import Product from "./Product";
+import TopProducts from "./TopProducts";
 
 const Wrapper = styled.div`
   display: flex;
+  color: #0d072c;
+  Navbar {
+    flex: 1;
+  }
 `;
 
 const MainContent = styled.div`
-  flex: 60%;
+  flex: 2;
+`;
+
+const Dashright = styled.div`
+  flex: 1;
+  flex-basis: 8%;
+  background: #fafbfc;
 `;
 
 function Dashboard() {
@@ -20,15 +30,9 @@ function Dashboard() {
       <MainContent>
         <SearchBar />
       </MainContent>
-      <div>
-        <Product
-          img="#"
-          name="something big to check"
-          description="some description make your page or section look good"
-          price="$54"
-        />
-        <Product img="#" name="something " description="some " price="$54" />
-      </div>
+      <Dashright>
+        <TopProducts />
+      </Dashright>
     </Wrapper>
   );
 }

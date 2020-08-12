@@ -5,16 +5,36 @@ const ProductWrap = styled.div`
   padding: 20px;
   border-radius: 20px;
   display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
   .img-container {
     img {
-      width: 140px;
-      height: 140px;
-      border-radius: 25px;
+      width: 75px;
+      height: 70px;
+      border-radius: 12px;
       backgroud: #eee;
     }
   }
   .product-description {
     flex: 1;
+    padding: 0 22px;
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    p {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #716d84;
+    }
+  }
+  .price {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  &:hover {
+    background: #fff;
   }
 `;
 
