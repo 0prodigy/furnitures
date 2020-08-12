@@ -1,15 +1,13 @@
 import React from "react";
 import "./App.css";
-import Dashboard from "./components/admin/Dashboard";
+import Home from "./components/client/Home";
 
 function App() {
   return (
     <div className="App">
-      <Dashboard />
+      <Home />
     </div>
   );
 }
 
 export default App;
-
-//Admin branch main app
