@@ -8,12 +8,17 @@ import Procard from "./Procard";
 import ProductForm from "./ProductForm";
 import VendorForm from "./VendorForm";
 import DesignerForm from "./DesignerForm";
+import { Component } from "react";
+import { NavigationContext } from "../../context/Navigation";
 
 const Wrapper = styled.div`
   display: flex;
   color: #0d072c;
   Navbar {
     flex: 1;
+  }
+  button {
+    cursor: pointer;
   }
 `;
 
@@ -34,54 +39,79 @@ const Grid = styled.div`
   grid-template-rows: repeat(2, 1fr);
 `;
 
-function Dashboard() {
-  return (
-    <Wrapper>
-      {" "}
-      <Navbar />{" "}
-      <MainContent>
-        <SearchBar />
-        {/* <Grid>
-          <Procard
-            label="Awaiting order"
-            stats="30k order"
-            img="https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-            background="#000"
-            color="#fff"
-          />
-          <Procard
-            label="Awaiting order"
-            stats="30k order"
-            img="https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-            background="#fff"
-            color="#000"
-          />
+const Board = styled.div`
+  box-sizzing: border-box;
+`;
 
-          <Procard
-            label="Awaiting order"
-            stats="30k order"
-            img="https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-            background="#fff"
-            color="#000"
-          />
-          <Procard
-            label="Awaiting order"
-            stats="30k order"
-            img="https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-            background="#000"
-            color="#fff"
-          />
-        </Grid>*/}
-        {/* <ProductForm /> */}
-        <DesignerForm />
-        <VendorForm />
-      </MainContent>
-      <Dashright>
-        <Rightnav />
-        <TopProducts />
-      </Dashright>
-    </Wrapper>
-  );
+class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      preview: "Dashboard",
+    };
+  }
+
+  render() {
+    return (
+      <Wrapper>
+        {" "}
+        <Navbar updatePreview={this.updatePreview} />{" "}
+        <MainContent>
+          <SearchBar />
+          <NavigationContext.Consumer>
+            {(value) => (
+              <div>
+                {value.preview === "Dashboard" && (
+                  <Board>
+                    <Grid>
+                      <Procard
+                        label="Awaiting order"
+                        stats="30k order"
+                        img="https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                        background="#000"
+                        color="#fff"
+                      />
+                      <Procard
+                        label="Awaiting order"
+                        stats="30k order"
+                        img="https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                        background="#fff"
+                        color="#000"
+                      />
+
+                      <Procard
+                        label="Awaiting order"
+                        stats="30k order"
+                        img="https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                        background="#fff"
+                        color="#000"
+                      />
+                      <Procard
+                        label="Awaiting order"
+                        stats="30k order"
+                        img="https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                        background="#000"
+                        color="#fff"
+                      />
+                    </Grid>
+                  </Board>
+                )}
+                {value.preview === "Product" && <ProductForm />}
+                {value.preview === "Designer" && <DesignerForm />}
+                {value.preview === "Vendor" && <VendorForm />}
+              </div>
+            )}
+          </NavigationContext.Consumer>
+        </MainContent>
+        <Dashright>
+          <Rightnav />
+          <TopProducts />
+        </Dashright>
+      </Wrapper>
+    );
+  }
 }
+
+Dashboard.contextType = NavigationContext;
 
 export default Dashboard;

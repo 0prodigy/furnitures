@@ -19,10 +19,10 @@ const Nav = styled.div`
 `;
 
 function Navlink(props) {
-  const { link, label, icon } = props;
+  const { link, label, icon, update } = props;
   return (
     <Nav>
-      <a href={link}>
+      <a href={link} onClick={update}>
         <span className="label">{label}</span>
         <span className="icon">{icon}</span>
       </a>
