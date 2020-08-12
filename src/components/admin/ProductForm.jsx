@@ -3,6 +3,12 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   padding: 10px 0 40px;
+  color: #306f41;
+  h1 {
+    margin-bottom: 2.4rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
 `;
 
 const Form = styled.form`
@@ -193,6 +199,7 @@ const Form = styled.form`
 export default function ProductForm(props) {
   return (
     <Wrapper>
+      <h1>Add Product</h1>
       <Form>
         <div className="row">
           <input
