@@ -32,13 +32,17 @@ const Wrapper = styled.div`
       flex: 1;
       padding: 20px 30px 65px;
       h1 {
-        marign-top: 10px;
+        font-weight: 400;
+        line-height: 1.4;
         font-size: 5rem;
+        font-family: "Abril Fatface", cursive;
       }
       h5 {
+        margin-top: 5px;
+        line-height: 1.5;
         font-size: 1.2rem;
-        font-weight: 500;
-        color: #3b5041;
+        font-weight: 400;
+        color: #5a695e;
         margin-bottom: 2rem;
       }
       button {
@@ -68,11 +72,12 @@ const Wrapper = styled.div`
       .meta {
         flex: 1;
 
-        h5 {
+        h4 {
           font-size: 1.1rem;
+          line-height: 2.5;
         }
         p {
-          color: #3b5041;
+          color: #5a695e;
         }
       }
     }
