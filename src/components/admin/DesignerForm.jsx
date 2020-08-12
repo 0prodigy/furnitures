@@ -250,6 +250,8 @@ export default function DesignerForm(props) {
             { value: "Mamta", label: "Mamta" },
             { value: "Others", label: "Others" },
           ]}
+          name="designer"
+          label="Designer"
         />
 
         <div className="button-wrapper">

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import MultiSelect from "./MultiSelect";
 
 const Wrapper = styled.div`
   padding: 10px 0 40px;
@@ -273,26 +274,26 @@ export default function ProductForm(props) {
           </label>
           <div className="bar"></div>
         </div>
-        <div className="row">
-          <label htmlFor="vendor" className="label">
-            Vendor
-          </label>
-          <select name="vendor">
-            <option value="" defaultValue>
-              Choose Here
-            </option>
-          </select>
-        </div>
-        <div className="row">
-          <label htmlFor="designer" className="label">
-            Designer
-          </label>
-          <select name="designer">
-            <option value="" defaultValue>
-              Choose Here
-            </option>
-          </select>
-        </div>
+        <MultiSelect
+          data={[
+            { value: null, label: "Choose Here" },
+            { value: "Akash", label: "Akash" },
+            { value: "Mamta", label: "Mamta" },
+            { value: "Others", label: "Others" },
+          ]}
+          name="vendor"
+          label="Vendor"
+        />
+        <MultiSelect
+          data={[
+            { value: null, label: "Choose Here" },
+            { value: "Akash", label: "Akash" },
+            { value: "Mamta", label: "Mamta" },
+            { value: "Others", label: "Others" },
+          ]}
+          name="designer"
+          label="Designer"
+        />
         <div className="row">
           <textarea
             className="auto-textarea input"
