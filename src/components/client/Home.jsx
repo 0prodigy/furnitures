@@ -4,6 +4,7 @@ import Banner from "./Banner";
 import styled from "styled-components";
 import Product from "./Product";
 import { ProductContext } from "../../context/ProductContext";
+import SingleProduct from "./SingleProduct";
 
 const Wrapper = styled.div`
   display: flex;
@@ -40,7 +41,7 @@ function Home() {
         <Sidebar></Sidebar>
         <Banner />
       </Wrapper>
-
+      <SingleProduct />
       <ProductContext.Consumer>
         {(value) => (
           <div>
