@@ -5,6 +5,7 @@ import styled from "styled-components";
 import TopProducts from "./TopProducts";
 import Rightnav from "./Rightnav";
 import Procard from "./Procard";
+import ProductForm from "./ProductForm";
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,7 +39,7 @@ function Dashboard() {
       <Navbar />{" "}
       <MainContent>
         <SearchBar />
-        <Grid>
+        {/* <Grid>
           <Procard
             label="Awaiting order"
             stats="30k order"
@@ -68,7 +69,8 @@ function Dashboard() {
             background="#000"
             color="#fff"
           />
-        </Grid>
+        </Grid>*/}
+        <ProductForm />
       </MainContent>
       <Dashright>
         <Rightnav />
