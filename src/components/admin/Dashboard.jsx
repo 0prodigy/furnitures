@@ -1,12 +1,25 @@
 import React from "react";
 import Navbar from "./Navbar";
+import SearchBar from "./SearchBar";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  display: flex;
+`;
+
+const MainContent = styled.div`
+  flex: 60%;
+`;
 
 function Dashboard() {
   return (
-    <div>
+    <Wrapper>
       {" "}
       <Navbar />{" "}
-    </div>
+      <MainContent>
+        <SearchBar />
+      </MainContent>
+    </Wrapper>
   );
 }
 
