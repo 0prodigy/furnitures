@@ -33,6 +33,9 @@ const Wrapper = styled.div`
   display: flex;
 
   .img-container {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
     flex: 50%;
   }
 
@@ -77,6 +80,7 @@ const Wrapper = styled.div`
 
     p {
       color: #737373;
+      line-height: 1.8;
     }
     .checkout {
       margin-top: 40px;
@@ -105,6 +109,13 @@ const Wrapper = styled.div`
         font-weight: 500;
       }
     }
+    span.color {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      border-radius: 50%;
+      margin-right: 2px;
+    }
   }
 `;
 
@@ -124,7 +135,9 @@ export default function SingleProduct(props) {
         <div
           className="img-container"
           style={{
-            background: `url( ${data.Images[0].url || "img/greenchair.PNG"})`,
+            backgroundImage: `url( ${
+              data.Images[0].url || "img/greenchair.PNG"
+            })`,
           }}
         ></div>
         <div className="product-description">
@@ -149,7 +162,11 @@ export default function SingleProduct(props) {
             </div>
             <div className="meta">
               <h4>Materials</h4>
-              <p>{data["Materials"]}</p>
+              <p>
+                {data["Materials"].map((meterial) => (
+                  <span> {meterial}, </span>
+                ))}
+              </p>
             </div>
             <div className="meta">
               <h4>Type</h4>
@@ -157,11 +174,22 @@ export default function SingleProduct(props) {
             </div>
             <div className="meta">
               <h4>Settings</h4>
-              <p>{data["Settings"]}</p>
+              <p>
+                {data["Settings"].map((setting) => (
+                  <span> {setting}, </span>
+                ))}
+              </p>
             </div>
             <div className="meta">
               <h4>Color</h4>
-              <p>{data["Color"]}</p>
+              <p>
+                {data["Color"].map((color) => (
+                  <span
+                    className="color"
+                    style={{ background: color.toLowerCase() }}
+                  ></span>
+                ))}
+              </p>
             </div>
             <div className="meta">
               <h4>Shipping</h4>

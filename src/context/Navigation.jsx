@@ -8,7 +8,7 @@ export default class NavigationContextProvider extends Component {
     super(props);
     this.state = {
       preview: "Dashboard",
-      admin: true,
+      admin: false,
     };
   }
 

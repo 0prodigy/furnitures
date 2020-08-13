@@ -45,7 +45,8 @@ const Wrapper = styled.div`
       }
     }
     .slide-img {
-      background: url("img/greenchair.PNG");
+      background: url("img/greenchair.PNG") center no-repeat;
+      background-size: cover;
       flex: 1;
     }
 

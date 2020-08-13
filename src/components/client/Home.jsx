@@ -48,13 +48,14 @@ const Products = styled.div`
 `;
 
 const Title = styled.div`
-  padding: 20px 35px 5px;
+  padding: 25px 35px 25px;
   max-width: 1100px;
   margin: auto;
   text-align: center;
   h1 {
     font-size: 2.4rem;
     font-weight: 400;
+    line-height: 2;
     color: #333;
   }
 `;
@@ -93,11 +94,12 @@ class Home extends Component {
       <>
         <Wrapper>
           <div className={!this.state.cartHidden ? "show-cart" : "hide-cart"}>
-            <Cart data={this.cart} />
+            <Cart data={this.state.cart} />
           </div>
           <Sidebar toHome={this.redirectToHome}></Sidebar>
           {this.state.singleProduct ? (
             <SingleProduct
+              style={{ bakground: "red" }}
               data={this.state.product}
               updateProduct={this.updateProduct}
               count={this.state.cart.length}
