@@ -8,16 +8,24 @@ export default class NavigationContextProvider extends Component {
     super(props);
     this.state = {
       preview: "Dashboard",
+      admin: true,
     };
   }
+
+  toggleAdmin = () => {
+    this.setState({ admin: !this.state.admin });
+  };
+
   updatePreview = (value) => {
     this.setState({ preview: value });
   };
   render() {
-    const { preview } = this.state;
-    const { updatePreview: update } = this;
+    const { preview, admin } = this.state;
+    const { updatePreview: update, toggleAdmin } = this;
     return (
-      <NavigationContext.Provider value={{ preview, update }}>
+      <NavigationContext.Provider
+        value={{ preview, update, admin, toggleAdmin }}
+      >
         {this.props.children}
       </NavigationContext.Provider>
     );

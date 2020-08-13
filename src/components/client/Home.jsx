@@ -3,13 +3,18 @@ import Sidebar from "./Sidebar";
 import Banner from "./Banner";
 import styled from "styled-components";
 import Product from "./Product";
+import { ProductContext } from "../../context/ProductContext";
+import SingleProduct from "./SingleProduct";
+import { Component } from "react";
+import Footer from "./Footer";
 
 const Wrapper = styled.div`
   display: flex;
 `;
 const Products = styled.div`
   display: flex;
-  flex-wrap: warp;
+  flex-wrap: wrap;
+  align-items: center;
   padding: 20px;
   max-width: 1100px;
   margin: auto;
@@ -31,27 +36,121 @@ const Title = styled.div`
   }
 `;
 
-function Home() {
-  return (
-    <>
-      <Wrapper>
-        <Sidebar></Sidebar>
-        <Banner />
-      </Wrapper>
-      <Title>
-        <h1>Chairs</h1>
-        <p>We provide world best wooden chair all over the world</p>
-      </Title>
-      <Products>
-        <Product
-          name="Wooden Chair"
-          type="Chair"
-          img="img/greenchair.PNG"
-          price="343"
-        />
-      </Products>
-    </>
-  );
+class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      singleProduct: false,
+      product: {},
+      cart: 0,
+    };
+  }
+
+  updateCount = () => {
+    this.setState({ cart: this.state.cart + 1 });
+  };
+
+  updateProduct = (product) => {
+    this.setState({ product: product, singleProduct: true });
+  };
+
+  redirectToHome = () => {
+    this.setState({ singleProduct: false });
+  };
+  render() {
+    return (
+      <>
+        <Wrapper>
+          <Sidebar toHome={this.redirectToHome}></Sidebar>
+          {this.state.singleProduct ? (
+            <SingleProduct
+              data={this.state.product}
+              updateProduct={this.updateProduct}
+              count={this.state.cart}
+              updateCart={this.updateCount}
+            />
+          ) : (
+            <Banner count={this.state.cart} />
+          )}
+        </Wrapper>
+
+        <ProductContext.Consumer>
+          {(value) => (
+            <div>
+              <Title>
+                <h1>Chairs</h1>
+                <p>We provide world best wooden chair all over the world</p>
+              </Title>
+              <Products>
+                {value.products.map((product) =>
+                  product.fields["Type"] === "Chairs" ? (
+                    <Product
+                      key={product.id}
+                      id={product.id}
+                      name={product.fields["Name"]}
+                      type={product.fields["Type"]}
+                      img={product.fields.Images[0].url}
+                      price={"$ " + product.fields["Unit cost"]}
+                      handleClick={this.updateProduct}
+                      data={product}
+                    />
+                  ) : (
+                    ""
+                  )
+                )}
+              </Products>
+              <Title>
+                <h1>Lighting</h1>
+                <p>Live the life in lighting</p>
+              </Title>
+              <Products>
+                {value.products.map((product) =>
+                  product.fields["Type"] === "Lighting" ? (
+                    <Product
+                      key={product.id}
+                      id={product.id}
+                      name={product.fields["Name"]}
+                      type={product.fields["Type"]}
+                      img={product.fields.Images[0].url}
+                      price={"$ " + product.fields["Unit cost"]}
+                      handleClick={this.updateProduct}
+                      data={product}
+                    />
+                  ) : (
+                    ""
+                  )
+                )}
+              </Products>
+              <Title>
+                <h1>Other</h1>
+                <p>
+                  We provide varity range of best furnitures all over the world
+                </p>
+              </Title>
+              <Products>
+                {value.products.map(
+                  (product) =>
+                    product.fields["Type"] !== ("Chairs" || "Lighting") && (
+                      <Product
+                        key={product.id}
+                        id={product.id}
+                        name={product.fields["Name"]}
+                        type={product.fields["Type"]}
+                        img={product.fields.Images[0].url}
+                        price={"$ " + product.fields["Unit cost"]}
+                        handleClick={this.updateProduct}
+                        data={product}
+                      />
+                    )
+                )}
+              </Products>
+            </div>
+          )}
+        </ProductContext.Consumer>
+        <Footer />
+      </>
+    );
+  }
 }
 
 export default Home;
