@@ -20,6 +20,9 @@ export default class ProductContextProvider extends Component {
     this.data = [];
     this.state = {
       products: data,
+      grossSale: "18K",
+      productSale: "34k",
+      stock: "34",
     };
   }
   getData = () => {
@@ -41,17 +44,30 @@ export default class ProductContextProvider extends Component {
           }
         }
       );
+    return this.state.products;
   };
   componentDidMount() {
-    // async () => {
     this.getData();
-    // };
   }
   render() {
     const { products } = this.state;
-    console.log(products);
+    let grossSale = 0;
+    let productSale = 0;
+    let stock = 0;
+    if (this.state.products.length > 0) {
+      this.state.products.forEach((product) => {
+        if (product.fields["In stock"]) {
+          stock += 1;
+        }
+        grossSale += product.fields["Gross sales"];
+        productSale += product.fields["Total units sold"];
+      });
+    }
+    console.log(this.state);
     return (
-      <ProductContext.Provider value={{ products }}>
+      <ProductContext.Provider
+        value={{ products, grossSale, productSale, stock }}
+      >
         {this.props.children}
       </ProductContext.Provider>
     );
