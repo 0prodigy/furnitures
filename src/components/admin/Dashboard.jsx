@@ -105,7 +105,7 @@ class Dashboard extends Component {
         </MainContent>
         <Dashright>
           <Rightnav />
-          <TopProducts />
+          <TopProducts label="Hot Selling Products" />
         </Dashright>
       </Wrapper>
     );

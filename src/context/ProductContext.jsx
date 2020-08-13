@@ -49,6 +49,7 @@ export default class ProductContextProvider extends Component {
   }
   render() {
     const { products } = this.state;
+    console.log(products);
     return (
       <ProductContext.Provider value={{ products }}>
         {this.props.children}
