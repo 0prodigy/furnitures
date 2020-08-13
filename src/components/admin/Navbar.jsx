@@ -22,7 +22,6 @@ function Navbar() {
     <NavigationContext.Consumer>
       {(value) => (
         <NavWrapper>
-          {console.log(value)}
           <Logo>Furnitures</Logo>
           <Navlink
             link="#"

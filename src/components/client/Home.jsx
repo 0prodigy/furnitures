@@ -53,11 +53,15 @@ class Home extends Component {
   updateProduct = (product) => {
     this.setState({ product: product, singleProduct: true });
   };
+
+  redirectToHome = () => {
+    this.setState({ singleProduct: false });
+  };
   render() {
     return (
       <>
         <Wrapper>
-          <Sidebar></Sidebar>
+          <Sidebar toHome={this.redirectToHome}></Sidebar>
           {this.state.singleProduct ? (
             <SingleProduct
               data={this.state.product}

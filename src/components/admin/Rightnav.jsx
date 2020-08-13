@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { NavigationContext } from "../../context/Navigation";
 
 const Nav = styled.nav`
   padding: 20px;
@@ -27,7 +28,9 @@ function Rightnav() {
       <div className="left">
         <span>Notification</span>
         <span>Messages</span>
-        <span>Logout</span>
+        <NavigationContext.Consumer>
+          {(value) => <span onClick={value.toggleAdmin}>Logout</span>}
+        </NavigationContext.Consumer>
       </div>
       <div className="right">
         <img
