@@ -35,20 +35,25 @@ class MultiSelect extends React.Component {
     this.state = {
       multiValue: [],
       filterOptions: this.props.data,
+      ids: [],
     };
   }
 
   handleMultiChange = (e) => {
     const { value: option } = e.target;
+    let id = e.target.options[e.target.selectedIndex].id;
     if (option !== "Choose Here") {
       this.setState((state) => {
         return {
           multiValue: [...state.multiValue, option],
+          ids: [...state.ids, id],
           filterOptions: state.filterOptions.filter(
             (op) => op.value !== option
           ),
         };
       });
+
+      this.props.returnIds(id);
     }
   };
 
@@ -63,7 +68,12 @@ class MultiSelect extends React.Component {
           multiple={true}
         >
           {this.state.filterOptions.map((option) => (
-            <option value={option.value} key={option.value} text={option.label}>
+            <option
+              value={option.value}
+              key={option.value}
+              text={option.label}
+              id={option.id}
+            >
               {option.label}
             </option>
           ))}

@@ -60,12 +60,25 @@ export default class ProductContextProvider extends Component {
       );
   };
 
+  createProduct = (product) => {
+    base("Furniture").create([{ fields: product }], function (err, records) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      records.forEach(function (record) {
+        console.log(record.getId());
+      });
+    });
+  };
+
   componentDidMount() {
     this.getData();
     this.getDesigners();
   }
   render() {
     const { products, designers } = this.state;
+    const { createProduct } = this;
     let grossSale = 0;
     let productSale = 0;
     let stock = 0;
@@ -80,7 +93,14 @@ export default class ProductContextProvider extends Component {
     }
     return (
       <ProductContext.Provider
-        value={{ products, grossSale, productSale, stock, designers }}
+        value={{
+          products,
+          grossSale,
+          productSale,
+          stock,
+          designers,
+          createProduct,
+        }}
       >
         {this.props.children}
       </ProductContext.Provider>

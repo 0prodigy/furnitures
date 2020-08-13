@@ -42,6 +42,7 @@ const Wrapper = styled.div`
         background: #19301c;
         color: #f2f1ef;
         border: 2px solid #19301c;
+        cursor: pointer;
       }
     }
     .slide-img {

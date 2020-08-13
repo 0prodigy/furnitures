@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import MultiSelect from "./MultiSelect";
 import { ProductContext } from "../../context/ProductContext";
+import { Component } from "react";
 
 const Wrapper = styled.div`
   padding: 10px 0 40px;
@@ -198,126 +199,306 @@ const Form = styled.form`
   }
 `;
 
-export default function ProductForm(props) {
-  return (
-    <Wrapper>
-      <h1>Add Product</h1>
-      <Form>
-        <div className="row">
-          <input
-            type="text"
-            name="name"
-            className="input"
-            placeholder="Night Lamp"
-            required
-          />
-          <label htmlFor="name" className="label">
-            Product Name
-          </label>
-          <div className="bar"></div>
-        </div>
+export default class ProductForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      type: "",
+      stock: false,
+      material: "",
+      setting: "",
+      notes: "",
+      size: "",
+      vendor: [],
+      designer: [],
+      unitcost: "",
+      link: "",
+      color: "",
+      images: "",
+      description: "",
+    };
+  }
 
-        <div className="row">
-          <input
-            type="text"
-            name="type"
-            placeholder="Bookshelves"
-            className="input"
-            required
-          />
-          <label htmlFor="type" className="label">
-            Type
-          </label>
-          <div className="bar"></div>
-        </div>
-        <div className="row">
-          <div className="checkbox-title">In Stock</div>
-          <div className="checkbox-wrapper">
-            <input name="stock" type="checkbox" />
-          </div>
-        </div>
-        <div className="row">
-          <input
-            type="text"
-            name="material"
-            className="input"
-            placeholder="Add , to seprate material like Light Wood, Bold Colour"
-            required
-          />
-          <label htmlFor="material" className="label">
-            Material
-          </label>
-          <div className="bar"></div>
-        </div>
-        <div className="row">
-          <input
-            type="text"
-            name="settings"
-            className="input"
-            placeholder="Add , to seprate material like Living room, Kitchen"
-            required
-          />
-          <label htmlFor="settings" className="label">
-            Setting
-          </label>
-          <div className="bar"></div>
-        </div>
-        <div className="row">
-          <input
-            type="text"
-            name="note"
-            className="input"
-            placeholder="Back in stock!"
-            required
-          />
-          <label htmlFor="note" className="label">
-            Notes
-          </label>
-          <div className="bar"></div>
-        </div>
-        <MultiSelect
-          data={[
-            { value: null, label: "Choose Here" },
-            { value: "Akash", label: "Akash" },
-            { value: "Mamta", label: "Mamta" },
-            { value: "Others", label: "Others" },
-          ]}
-          name="vendor"
-          label="Vendor"
-        />
+  updateDesigner = (id) => {
+    this.setState((prevState) => ({ designer: [...prevState.designer, id] }));
+  };
 
-        <ProductContext.Consumer>
-          {(value) => (
-            <MultiSelect
-              data={value.designers.map((designer) => {
-                const option = {
-                  value: designer["fields"]["Name"],
-                  label: designer["fields"]["Name"],
-                };
-                return option;
-              })}
-              name="designer"
-              label="Designers"
+  handleChange = (e) => {
+    const { name, value, type } = e.target;
+    let val = type === "checkbox" ? !this.state.stock : value;
+    this.setState({ [name]: val });
+  };
+
+  createProduct = (e) => {
+    e.preventDefault();
+    const value = this.context;
+    const {
+      name: Name,
+      description: Description,
+      link: Link,
+      type: Type,
+      vendor: Vendor,
+      designer: Designer,
+    } = this.state;
+    const product = {
+      Name,
+      Description,
+      Link,
+      Type,
+      Vendor,
+      Designer,
+      "Size (WxLxH)": this.state.size,
+      "In stock": this.state.stock,
+      "Unit cost": Number(this.state.unitcost),
+      Images: [
+        {
+          url: this.state.images,
+        },
+      ],
+      Materials: this.state.material.trim().split(","),
+      Color: this.state.color.trim().split(","),
+      Settings: this.state.setting.trim().split(","),
+    };
+    value.createProduct(product);
+    this.reset();
+  };
+
+  reset = () => {
+    this.setState({
+      name: "",
+      type: "",
+      stock: false,
+      material: "",
+      setting: "",
+      notes: "",
+      vendor: [],
+      designer: [],
+      unitcost: "",
+      link: "",
+      color: "",
+      images: "",
+      description: "",
+    });
+  };
+
+  render() {
+    return (
+      <Wrapper>
+        <h1>Add Product</h1>
+        <Form onSubmit={this.createProduct}>
+          <div className="row">
+            <input
+              type="text"
+              name="name"
+              className="input"
+              placeholder="Night Lamp"
+              value={this.state.name}
+              onChange={this.handleChange}
+              required
             />
-          )}
-        </ProductContext.Consumer>
-        <div className="row">
-          <textarea
-            className="auto-textarea input"
-            type="text"
-            name="description"
-            placeholder="Product Description..."
-            required
-          ></textarea>
-          <label htmlFor="name" className="label">
-            Description
-          </label>
-          <div className="bar"></div>
-        </div>
-        <div className="button-wrapper">
-          <button type="submit">Add</button>
-        </div>
-      </Form>
-    </Wrapper>
-  );
+            <label htmlFor="name" className="label">
+              Product Name
+            </label>
+            <div className="bar"></div>
+          </div>
+
+          <div className="row">
+            <input
+              type="text"
+              name="type"
+              placeholder="Bookshelves"
+              className="input"
+              value={this.state.type}
+              onChange={this.handleChange}
+              required
+            />
+            <label htmlFor="type" className="label">
+              Type
+            </label>
+            <div className="bar"></div>
+          </div>
+          <div className="row">
+            <div className="checkbox-title">In Stock</div>
+            <div className="checkbox-wrapper">
+              <input
+                name="stock"
+                type="checkbox"
+                checked={this.state.stack}
+                onChange={this.handleChange}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <input
+              type="text"
+              name="images"
+              className="input"
+              placeholder="https://mysite.com/img/product"
+              value={this.state.images}
+              onChange={this.handleChange}
+              required
+            />
+            <label htmlFor="images" className="label">
+              Image Url
+            </label>
+            <div className="bar"></div>
+          </div>
+          <div className="row">
+            <input
+              type="text"
+              name="unitcost"
+              className="input"
+              placeholder="5555"
+              value={this.state.unitcost}
+              onChange={this.handleChange}
+              required
+            />
+            <label htmlFor="unitcost" className="label">
+              Unit Cost
+            </label>
+            <div className="bar"></div>
+          </div>
+          <div className="row">
+            <input
+              type="text"
+              name="material"
+              className="input"
+              placeholder="Add , to seprate material like Light Wood, Bold Colour"
+              value={this.state.material}
+              onChange={this.handleChange}
+              required
+            />
+            <label htmlFor="material" className="label">
+              Material
+            </label>
+            <div className="bar"></div>
+          </div>
+          <div className="row">
+            <input
+              type="text"
+              name="setting"
+              className="input"
+              placeholder="Add , to seprate material like Living room, Kitchen"
+              value={this.state.setting}
+              onChange={this.handleChange}
+              required
+            />
+            <label htmlFor="setting" className="label">
+              Setting
+            </label>
+            <div className="bar"></div>
+          </div>
+          <div className="row">
+            <input
+              type="text"
+              name="color"
+              className="input"
+              placeholder="Add , to seprate color like Green, Red, Orange"
+              value={this.state.color}
+              onChange={this.handleChange}
+              required
+            />
+            <label htmlFor="color" className="label">
+              Colors
+            </label>
+            <div className="bar"></div>
+          </div>
+          <div className="row">
+            <input
+              type="text"
+              name="size"
+              className="input"
+              placeholder="16 x 45 x 60"
+              value={this.state.size}
+              onChange={this.handleChange}
+              required
+            />
+            <label htmlFor="size" className="label">
+              Size (WxLxH)
+            </label>
+            <div className="bar"></div>
+          </div>
+          <div className="row">
+            <input
+              type="text"
+              name="link"
+              className="input"
+              placeholder="www.example.com"
+              value={this.state.link}
+              onChange={this.handleChange}
+              required
+            />
+            <label htmlFor="link" className="label">
+              Link
+            </label>
+            <div className="bar"></div>
+          </div>
+          <div className="row">
+            <input
+              type="text"
+              name="note"
+              className="input"
+              placeholder="Back in stock!"
+              value={this.state.note}
+              onChange={this.handleChange}
+              required
+            />
+            <label htmlFor="note" className="label">
+              Notes
+            </label>
+            <div className="bar"></div>
+          </div>
+          <MultiSelect
+            data={[
+              { value: null, label: "Choose Here" },
+              { value: "Akash", label: "Akash" },
+              { value: "Mamta", label: "Mamta" },
+              { value: "Others", label: "Others" },
+            ]}
+            name="vendor"
+            label="Vendor"
+          />
+
+          <ProductContext.Consumer>
+            {(value) => (
+              <MultiSelect
+                data={value.designers.map((designer) => {
+                  const option = {
+                    value: designer["fields"]["Name"],
+                    label: designer["fields"]["Name"],
+                    id: designer.id,
+                  };
+                  return option;
+                })}
+                name="designer"
+                label="Designers"
+                returnIds={this.updateDesigner}
+              />
+            )}
+          </ProductContext.Consumer>
+          <div className="row">
+            <textarea
+              className="auto-textarea input"
+              type="text"
+              name="description"
+              placeholder="Product Description..."
+              value={this.state.description}
+              onChange={this.handleChange}
+              required
+            ></textarea>
+            <label htmlFor="name" className="label">
+              Description
+            </label>
+            <div className="bar"></div>
+          </div>
+          <div className="button-wrapper">
+            <button type="submit">Add</button>
+          </div>
+        </Form>
+      </Wrapper>
+    );
+  }
 }
+
+ProductForm.contextType = ProductContext;
