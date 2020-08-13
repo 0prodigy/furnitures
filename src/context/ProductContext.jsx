@@ -10,8 +10,7 @@ Airtable.configure({
 });
 
 const base = Airtable.base("appQ41deBPSu2yoU3");
-let data = [];
-
+let page;
 export const ProductContext = createContext();
 
 export default class ProductContextProvider extends Component {
@@ -19,18 +18,17 @@ export default class ProductContextProvider extends Component {
     super(props);
     this.data = [];
     this.state = {
-      products: data,
+      products: [],
+      designers: [],
     };
   }
   getData = () => {
-    let page;
     base("Furniture")
       .select({
         view: "All furniture",
       })
       .eachPage(
         (page = (records, fetchNextPage) => {
-          data = records;
           this.setState({ products: records });
           fetchNextPage();
         }),
@@ -42,15 +40,48 @@ export default class ProductContextProvider extends Component {
         }
       );
   };
+
+  getDesigners = () => {
+    base("Designers")
+      .select({
+        view: "All designers",
+      })
+      .eachPage(
+        (page = (records, fetchNextPage) => {
+          this.setState({ designers: records });
+          fetchNextPage();
+        }),
+        function done(err) {
+          if (err) {
+            console.error(err);
+            return;
+          }
+        }
+      );
+  };
+
   componentDidMount() {
-    // async () => {
     this.getData();
-    // };
+    this.getDesigners();
   }
   render() {
-    const { products } = this.state;
+    const { products, designers } = this.state;
+    let grossSale = 0;
+    let productSale = 0;
+    let stock = 0;
+    if (this.state.products.length > 0) {
+      this.state.products.forEach((product) => {
+        if (product.fields["In stock"]) {
+          stock += 1;
+        }
+        grossSale += product.fields["Gross sales"];
+        productSale += product.fields["Total units sold"];
+      });
+    }
     return (
-      <ProductContext.Provider value={{ products }}>
+      <ProductContext.Provider
+        value={{ products, grossSale, productSale, stock, designers }}
+      >
         {this.props.children}
       </ProductContext.Provider>
     );

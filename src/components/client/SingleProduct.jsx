@@ -118,7 +118,7 @@ export default function SingleProduct(props) {
   return (
     <div>
       <NavWrap>
-        <Nav count={props.count} />
+        <Nav count={props.count} toggleCart={props.toggleCart} />
       </NavWrap>
       <Wrapper>
         <div

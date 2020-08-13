@@ -53,7 +53,7 @@ function Nav(props) {
             </a>
           </li>
           <li>
-            <a href="/#">
+            <a href="/#" onClick={props.toggleCart}>
               <img src="img/cart.PNG" alt="cart" />
             </a>
           </li>
