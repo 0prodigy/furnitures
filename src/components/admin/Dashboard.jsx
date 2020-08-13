@@ -11,6 +11,7 @@ import DesignerForm from "./DesignerForm";
 import { Component } from "react";
 import { NavigationContext } from "../../context/Navigation";
 import { ProductContext } from "../../context/ProductContext";
+import Designers from "./Designers";
 
 const Wrapper = styled.div`
   display: flex;
@@ -57,11 +58,12 @@ class Dashboard extends Component {
       <Wrapper>
         {" "}
         <Navbar updatePreview={this.updatePreview} />{" "}
-        <MainContent>
-          <SearchBar />
-          <NavigationContext.Consumer>
-            {(value) => (
-              <div>
+        <NavigationContext.Consumer>
+          {(value) => (
+            <>
+              <MainContent>
+                <SearchBar />
+
                 {value.preview === "Dashboard" && (
                   <Board>
                     <ProductContext.Consumer>
@@ -116,14 +118,18 @@ class Dashboard extends Component {
                 {value.preview === "Product" && <ProductForm />}
                 {value.preview === "Designer" && <DesignerForm />}
                 {value.preview === "Vendor" && <VendorForm />}
-              </div>
-            )}
-          </NavigationContext.Consumer>
-        </MainContent>
-        <Dashright>
-          <Rightnav />
-          <TopProducts label="Hot Selling Products" />
-        </Dashright>
+              </MainContent>
+              <Dashright>
+                <Rightnav />
+                {value.preview === "Designer" ? (
+                  <Designers label="Our Talented Designers" />
+                ) : (
+                  <TopProducts label="Hot Selling Products" />
+                )}
+              </Dashright>
+            </>
+          )}
+        </NavigationContext.Consumer>
       </Wrapper>
     );
   }
