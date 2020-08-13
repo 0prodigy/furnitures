@@ -53,7 +53,10 @@ class Home extends Component {
         <Wrapper>
           <Sidebar></Sidebar>
           {this.state.singleProduct ? (
-            <SingleProduct data={this.state.product} />
+            <SingleProduct
+              data={this.state.product}
+              updateProduct={this.updateProduct}
+            />
           ) : (
             <Banner />
           )}

@@ -1,5 +1,32 @@
 import React from "react";
 import styled from "styled-components";
+import { ProductContext } from "../../context/ProductContext";
+import Product from "./Product";
+
+const Products = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+  > div {
+    flex: 33.33%;
+    max-width: 33.33%;
+  }
+`;
+
+const Title = styled.div`
+  padding: 20px 35px 5px;
+  max-width: 1100px;
+  margin: auto;
+  text-align: center;
+  h1 {
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: #333;
+  }
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -104,7 +131,7 @@ const Nav = styled.div`
 `;
 
 export default function SingleProduct(props) {
-  let { data } = props;
+  let { data, updateProduct } = props;
   data = data.fields;
   console.log(data);
   return (
@@ -152,8 +179,7 @@ export default function SingleProduct(props) {
         <div
           className="img-container"
           style={{
-            background:
-              "url(" + data.Images[0].url || "img/greenchair.PNG" + ")",
+            background: `url( ${data.Images[0].url || "img/greenchair.PNG"})`,
           }}
         ></div>
         <div className="product-description">
@@ -203,6 +229,33 @@ export default function SingleProduct(props) {
           </div>
         </div>
       </Wrapper>
+      <ProductContext.Consumer>
+        {(value) => (
+          <div>
+            <Title>
+              <h1>Similar Product Specially Customize for</h1>
+              <p>We provide world best {data["Type"]} all over the world</p>
+            </Title>
+            <Products>
+              {value.products.map(
+                (product) =>
+                  product.fields["Type"] === data["Type"] && (
+                    <Product
+                      key={product.id}
+                      id={product.id}
+                      name={product.fields["Name"]}
+                      type={product.fields["Type"]}
+                      img={product.fields.Images[0].url}
+                      price={"$ " + product.fields["Unit cost"]}
+                      handleClick={updateProduct}
+                      data={product}
+                    />
+                  )
+              )}
+            </Products>
+          </div>
+        )}
+      </ProductContext.Consumer>
     </div>
   );
 }
