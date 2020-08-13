@@ -43,7 +43,7 @@ function Nav(props) {
       <div className="right">
         <ul>
           <li>
-            <a href="/#">
+            <a href="/#" onClick={props.toggleSearch}>
               <img src="img/search.PNG" alt="search" />
             </a>
           </li>

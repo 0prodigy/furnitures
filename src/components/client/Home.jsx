@@ -8,6 +8,7 @@ import SingleProduct from "./SingleProduct";
 import { Component } from "react";
 import Footer from "./Footer";
 import Cart from "./Cart";
+import Search from "./Search";
 
 const Wrapper = styled.div`
   display: flex;
@@ -60,6 +61,27 @@ const Title = styled.div`
   }
 `;
 
+const Main = styled.main`
+  .show-search {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    transform: translateY(0%);
+    overflow-y: scroll;
+    top: 0;
+    transition: all 2s ease;
+  }
+  .hide-search {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    transform: translateY(-100%);
+    overflow-y: scroll;
+    top: 0;
+    transition: all 2s ease;
+  }
+`;
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -68,6 +90,7 @@ class Home extends Component {
       product: {},
       cart: [],
       cartHidden: true,
+      searchHidden: true,
     };
   }
 
@@ -88,14 +111,18 @@ class Home extends Component {
   redirectToHome = () => {
     this.setState({ singleProduct: false });
   };
+
+  handleClose = () => {
+    this.setState({ searchHidden: !this.state.searchHidden });
+  };
   render() {
-    console.log(this.state);
     return (
-      <>
+      <Main>
         <Wrapper>
           <div className={!this.state.cartHidden ? "show-cart" : "hide-cart"}>
             <Cart data={this.state.cart} />
           </div>
+
           <Sidebar toHome={this.redirectToHome}></Sidebar>
           {this.state.singleProduct ? (
             <SingleProduct
@@ -105,11 +132,13 @@ class Home extends Component {
               count={this.state.cart.length}
               updateCart={this.updateCart}
               toggleCart={this.toggleCart}
+              toggleSearch={this.handleClose}
             />
           ) : (
             <Banner
               count={this.state.cart.length}
               toggleCart={this.toggleCart}
+              toggleSearch={this.handleClose}
             />
           )}
         </Wrapper>
@@ -117,6 +146,13 @@ class Home extends Component {
         <ProductContext.Consumer>
           {(value) => (
             <div>
+              <div
+                className={
+                  !this.state.searchHidden ? "show-search" : "hide-search"
+                }
+              >
+                <Search data={value.products} handleClose={this.handleClose} />
+              </div>
               <Title>
                 <h1>Chairs</h1>
                 <p>We provide world best wooden chair all over the world</p>
@@ -188,7 +224,7 @@ class Home extends Component {
           )}
         </ProductContext.Consumer>
         <Footer />
-      </>
+      </Main>
     );
   }
 }

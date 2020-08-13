@@ -129,7 +129,11 @@ export default function SingleProduct(props) {
   return (
     <div>
       <NavWrap>
-        <Nav count={props.count} toggleCart={props.toggleCart} />
+        <Nav
+          count={props.count}
+          toggleCart={props.toggleCart}
+          toggleSearch={props.toggleSearch}
+        />
       </NavWrap>
       <Wrapper>
         <div
@@ -163,8 +167,8 @@ export default function SingleProduct(props) {
             <div className="meta">
               <h4>Materials</h4>
               <p>
-                {data["Materials"].map((meterial) => (
-                  <span> {meterial}, </span>
+                {data["Materials"].map((meterial, i) => (
+                  <span key={i}> {meterial}, </span>
                 ))}
               </p>
             </div>
@@ -175,16 +179,17 @@ export default function SingleProduct(props) {
             <div className="meta">
               <h4>Settings</h4>
               <p>
-                {data["Settings"].map((setting) => (
-                  <span> {setting}, </span>
+                {data["Settings"].map((setting, i) => (
+                  <span key={i}> {setting}, </span>
                 ))}
               </p>
             </div>
             <div className="meta">
               <h4>Color</h4>
               <p>
-                {data["Color"].map((color) => (
+                {data["Color"].map((color, i) => (
                   <span
+                    key={i}
                     className="color"
                     style={{ background: color.toLowerCase() }}
                   ></span>
