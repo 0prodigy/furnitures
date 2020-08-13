@@ -7,9 +7,32 @@ import { ProductContext } from "../../context/ProductContext";
 import SingleProduct from "./SingleProduct";
 import { Component } from "react";
 import Footer from "./Footer";
+import Cart from "./Cart";
 
 const Wrapper = styled.div`
   display: flex;
+  position: relative;
+  overflow: hidden;
+
+  .show-cart {
+    position: absolute;
+    background: #fafbfc;
+    min-width: 400px;
+    min-height: 100vh;
+    top: 60px;
+    right: 0;
+    transition: all 1.2s ease;
+  }
+  .hide-cart {
+    position: absolute;
+    background: #fafbfc;
+    min-width: 400px;
+    min-height: 100vh;
+    top: 60px;
+    right: 0;
+    transition: all 1.2s ease;
+    transform: translateX(100%);
+  }
 `;
 const Products = styled.div`
   display: flex;
@@ -42,12 +65,19 @@ class Home extends Component {
     this.state = {
       singleProduct: false,
       product: {},
-      cart: 0,
+      cart: [],
+      cartHidden: true,
     };
   }
 
-  updateCount = () => {
-    this.setState({ cart: this.state.cart + 1 });
+  toggleCart = () => {
+    this.setState({ cartHidden: !this.state.cartHidden });
+  };
+
+  updateCart = () => {
+    this.setState((prevState) => ({
+      cart: [...prevState.cart, this.state.product],
+    }));
   };
 
   updateProduct = (product) => {
@@ -58,19 +88,27 @@ class Home extends Component {
     this.setState({ singleProduct: false });
   };
   render() {
+    console.log(this.state);
     return (
       <>
         <Wrapper>
+          <div className={!this.state.cartHidden ? "show-cart" : "hide-cart"}>
+            <Cart data={this.cart} />
+          </div>
           <Sidebar toHome={this.redirectToHome}></Sidebar>
           {this.state.singleProduct ? (
             <SingleProduct
               data={this.state.product}
               updateProduct={this.updateProduct}
-              count={this.state.cart}
-              updateCart={this.updateCount}
+              count={this.state.cart.length}
+              updateCart={this.updateCart}
+              toggleCart={this.toggleCart}
             />
           ) : (
-            <Banner count={this.state.cart} />
+            <Banner
+              count={this.state.cart.length}
+              toggleCart={this.toggleCart}
+            />
           )}
         </Wrapper>
 

@@ -67,11 +67,9 @@ const Wrapper = styled.div`
   }
 `;
 function Banner(props) {
-  console.log("ban", props.count);
-
   return (
     <Wrapper>
-      <Nav count={props.count} />
+      <Nav count={props.count} toggleCart={props.toggleCart} />
       <div className="slider">
         <div className="slider-content">
           <h1>Furniture you will love</h1>
