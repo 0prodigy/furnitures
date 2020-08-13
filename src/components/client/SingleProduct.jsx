@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { ProductContext } from "../../context/ProductContext";
 import Product from "./Product";
+import Nav from "./Nav";
 
 const Products = styled.div`
   display: flex;
@@ -107,74 +108,18 @@ const Wrapper = styled.div`
   }
 `;
 
-const Nav = styled.div`
+const NavWrap = styled.div`
   background: #f2f1ef;
-  .nav {
-    padding: 30px;
-    display: flex;
-    justify-content: space-around;
-
-    ul {
-      display: flex;
-      list-style: none;
-
-      a {
-        text-decoration: none;
-        font-weight: 700;
-        font-size: 1rem;
-        color: #19301c;
-        display: inline-block;
-        margin-right: 20px;
-      }
-    }
-  }
 `;
 
 export default function SingleProduct(props) {
   let { data, updateProduct } = props;
   data = data.fields;
-  console.log(data);
   return (
     <div>
-      <Nav>
-        <div className="nav">
-          <div className="left">
-            <ul>
-              <li>
-                <a href="/#">products</a>
-              </li>
-              <li>
-                <a href="/#">about</a>
-              </li>
-              <li>
-                <a href="/#">terms</a>
-              </li>
-              <li>
-                <a href="/#">designers</a>
-              </li>
-            </ul>
-          </div>
-          <div className="right">
-            <ul>
-              <li>
-                <a href="/#">
-                  <img src="img/search.PNG" alt="search" />
-                </a>
-              </li>
-              <li>
-                <a href="/#">
-                  <img src="img/user.PNG" alt="user" />
-                </a>
-              </li>
-              <li>
-                <a href="/#">
-                  <img src="img/cart.PNG" alt="cart" />
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </Nav>
+      <NavWrap>
+        <Nav count={props.count} />
+      </NavWrap>
       <Wrapper>
         <div
           className="img-container"
@@ -225,7 +170,9 @@ export default function SingleProduct(props) {
           </div>
           <div className="checkout">
             <button className="btn-light">$ {data["Unit cost"]}</button>
-            <button className="btn-dark">Add To Cart</button>
+            <button className="btn-dark" onClick={props.updateCart}>
+              Add To Cart
+            </button>
           </div>
         </div>
       </Wrapper>

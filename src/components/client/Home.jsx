@@ -41,8 +41,13 @@ class Home extends Component {
     this.state = {
       singleProduct: false,
       product: {},
+      cart: 0,
     };
   }
+
+  updateCount = () => {
+    this.setState({ cart: this.state.cart + 1 });
+  };
 
   updateProduct = (product) => {
     this.setState({ product: product, singleProduct: true });
@@ -56,9 +61,11 @@ class Home extends Component {
             <SingleProduct
               data={this.state.product}
               updateProduct={this.updateProduct}
+              count={this.state.cart}
+              updateCart={this.updateCount}
             />
           ) : (
-            <Banner />
+            <Banner count={this.state.cart} />
           )}
         </Wrapper>
 

@@ -1,30 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import Nav from "./Nav";
 
 const Wrapper = styled.div`
   background: #f2f1ef;
   color: #19301c;
   padding-bottom: 10px;
   flex: 1;
-  .nav {
-    padding: 30px;
-    display: flex;
-    justify-content: space-around;
 
-    ul {
-      display: flex;
-      list-style: none;
-
-      a {
-        text-decoration: none;
-        font-weight: 700;
-        font-size: 1rem;
-        color: #19301c;
-        display: inline-block;
-        margin-right: 20px;
-      }
-    }
-  }
   .slider {
     display: flex;
 
@@ -83,46 +66,12 @@ const Wrapper = styled.div`
     }
   }
 `;
-function Banner() {
+function Banner(props) {
+  console.log("ban", props.count);
+
   return (
     <Wrapper>
-      <div className="nav">
-        <div className="left">
-          <ul>
-            <li>
-              <a href="/#">products</a>
-            </li>
-            <li>
-              <a href="/#">about</a>
-            </li>
-            <li>
-              <a href="/#">terms</a>
-            </li>
-            <li>
-              <a href="/#">designers</a>
-            </li>
-          </ul>
-        </div>
-        <div className="right">
-          <ul>
-            <li>
-              <a href="/#">
-                <img src="img/search.PNG" alt="search" />
-              </a>
-            </li>
-            <li>
-              <a href="/#">
-                <img src="img/user.PNG" alt="user" />
-              </a>
-            </li>
-            <li>
-              <a href="/#">
-                <img src="img/cart.PNG" alt="cart" />
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <Nav count={props.count} />
       <div className="slider">
         <div className="slider-content">
           <h1>Furniture you will love</h1>
