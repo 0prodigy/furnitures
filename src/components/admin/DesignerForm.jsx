@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import MultiSelect from "./MultiSelect";
+import { ProductContext } from "../../context/ProductContext";
 
 const Wrapper = styled.div`
   padding: 10px 0 40px;
@@ -242,17 +243,21 @@ export default function DesignerForm(props) {
           </label>
           <div className="bar"></div>
         </div>
-
-        <MultiSelect
-          data={[
-            { value: null, label: "Choose Here" },
-            { value: "Akash", label: "Akash" },
-            { value: "Mamta", label: "Mamta" },
-            { value: "Others", label: "Others" },
-          ]}
-          name="designer"
-          label="Designer"
-        />
+        <ProductContext.Consumer>
+          {(value) => (
+            <MultiSelect
+              data={value.products.map((product) => {
+                const option = {
+                  value: product["fields"]["Name"],
+                  label: product["fields"]["Name"],
+                };
+                return option;
+              })}
+              name="products"
+              label="products"
+            />
+          )}
+        </ProductContext.Consumer>
 
         <div className="button-wrapper">
           <button type="submit">Add</button>

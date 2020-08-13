@@ -5,6 +5,12 @@
   margin: 0;
   font-family: "Roboto", sans-serif;
 }
+
+html {
+  scroll-behavior: smooth;
+  transition: scroll 0.5s ease;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

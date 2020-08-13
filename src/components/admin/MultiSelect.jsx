@@ -15,7 +15,7 @@ const Select = styled.select`
 
 const Selected = styled.div`
   display: flex;
-  flex: wrap;
+  flex-wrap: wrap;
   padding: 10px 0;
   p {
     padding: 2px 16px;
@@ -25,6 +25,7 @@ const Selected = styled.div`
     margin-right: 23px;
     font-size: 0.8rem;
     color: #000;
+    margin-bottom: 20px;
   }
 `;
 

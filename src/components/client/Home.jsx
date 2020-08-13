@@ -8,6 +8,7 @@ import SingleProduct from "./SingleProduct";
 import { Component } from "react";
 import Footer from "./Footer";
 import Cart from "./Cart";
+import Search from "./Search";
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,14 +49,36 @@ const Products = styled.div`
 `;
 
 const Title = styled.div`
-  padding: 20px 35px 5px;
+  padding: 25px 35px 25px;
   max-width: 1100px;
   margin: auto;
   text-align: center;
   h1 {
     font-size: 2.4rem;
     font-weight: 400;
+    line-height: 2;
     color: #333;
+  }
+`;
+
+const Main = styled.main`
+  .show-search {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    transform: translateY(0%);
+    overflow-y: scroll;
+    top: 0;
+    transition: all 2s ease;
+  }
+  .hide-search {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    transform: translateY(-100%);
+    overflow-y: scroll;
+    top: 0;
+    transition: all 2s ease;
   }
 `;
 
@@ -67,6 +90,7 @@ class Home extends Component {
       product: {},
       cart: [],
       cartHidden: true,
+      searchHidden: true,
     };
   }
 
@@ -87,27 +111,34 @@ class Home extends Component {
   redirectToHome = () => {
     this.setState({ singleProduct: false });
   };
+
+  handleClose = () => {
+    this.setState({ searchHidden: !this.state.searchHidden });
+  };
   render() {
-    console.log(this.state);
     return (
-      <>
+      <Main>
         <Wrapper>
           <div className={!this.state.cartHidden ? "show-cart" : "hide-cart"}>
-            <Cart data={this.cart} />
+            <Cart data={this.state.cart} />
           </div>
+
           <Sidebar toHome={this.redirectToHome}></Sidebar>
           {this.state.singleProduct ? (
             <SingleProduct
+              style={{ bakground: "red" }}
               data={this.state.product}
               updateProduct={this.updateProduct}
               count={this.state.cart.length}
               updateCart={this.updateCart}
               toggleCart={this.toggleCart}
+              toggleSearch={this.handleClose}
             />
           ) : (
             <Banner
               count={this.state.cart.length}
               toggleCart={this.toggleCart}
+              toggleSearch={this.handleClose}
             />
           )}
         </Wrapper>
@@ -115,6 +146,13 @@ class Home extends Component {
         <ProductContext.Consumer>
           {(value) => (
             <div>
+              <div
+                className={
+                  !this.state.searchHidden ? "show-search" : "hide-search"
+                }
+              >
+                <Search data={value.products} handleClose={this.handleClose} />
+              </div>
               <Title>
                 <h1>Chairs</h1>
                 <p>We provide world best wooden chair all over the world</p>
@@ -186,7 +224,7 @@ class Home extends Component {
           )}
         </ProductContext.Consumer>
         <Footer />
-      </>
+      </Main>
     );
   }
 }

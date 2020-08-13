@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import MultiSelect from "./MultiSelect";
+import { ProductContext } from "../../context/ProductContext";
 
 const Wrapper = styled.div`
   padding: 10px 0 40px;
@@ -284,16 +285,22 @@ export default function ProductForm(props) {
           name="vendor"
           label="Vendor"
         />
-        <MultiSelect
-          data={[
-            { value: null, label: "Choose Here" },
-            { value: "Akash", label: "Akash" },
-            { value: "Mamta", label: "Mamta" },
-            { value: "Others", label: "Others" },
-          ]}
-          name="designer"
-          label="Designer"
-        />
+
+        <ProductContext.Consumer>
+          {(value) => (
+            <MultiSelect
+              data={value.designers.map((designer) => {
+                const option = {
+                  value: designer["fields"]["Name"],
+                  label: designer["fields"]["Name"],
+                };
+                return option;
+              })}
+              name="designer"
+              label="Designers"
+            />
+          )}
+        </ProductContext.Consumer>
         <div className="row">
           <textarea
             className="auto-textarea input"

@@ -45,7 +45,8 @@ const Wrapper = styled.div`
       }
     }
     .slide-img {
-      background: url("img/greenchair.PNG");
+      background: url("img/greenchair.PNG") center no-repeat;
+      background-size: cover;
       flex: 1;
     }
 
@@ -69,7 +70,11 @@ const Wrapper = styled.div`
 function Banner(props) {
   return (
     <Wrapper>
-      <Nav count={props.count} toggleCart={props.toggleCart} />
+      <Nav
+        count={props.count}
+        toggleCart={props.toggleCart}
+        toggleSearch={props.toggleSearch}
+      />
       <div className="slider">
         <div className="slider-content">
           <h1>Furniture you will love</h1>
