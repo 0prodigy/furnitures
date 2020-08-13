@@ -19,6 +19,19 @@ const CartWrap = styled.div`
   .products {
     clear: right;
   }
+
+  .btn-dark {
+    padding: 20px 30px;
+    width: 100%;
+    background: #19301c;
+    color: #fdfcfb;
+    border: 2px solid #19301c;
+    cursor: pointer;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    cursor: pointer;
+  }
 `;
 
 export default function Cart(props) {
@@ -42,6 +55,7 @@ export default function Cart(props) {
           />
         ))}
       </div>
+      <button className="btn-dark">Checkout</button>
     </CartWrap>
   );
 }
