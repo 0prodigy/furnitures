@@ -6,6 +6,7 @@ import Product from "./Product";
 import { ProductContext } from "../../context/ProductContext";
 import SingleProduct from "./SingleProduct";
 import { Component } from "react";
+import Footer from "./Footer";
 
 const Wrapper = styled.div`
   display: flex;
@@ -142,6 +143,7 @@ class Home extends Component {
             </div>
           )}
         </ProductContext.Consumer>
+        <Footer />
       </>
     );
   }
