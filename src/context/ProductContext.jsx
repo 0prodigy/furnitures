@@ -2,14 +2,16 @@ import React from "react";
 import { createContext } from "react";
 import { Component } from "react";
 import Airtable from "airtable";
-import APIKEY from "../APIKEY";
+
+
 
 Airtable.configure({
   endpointUrl: "https://api.airtable.com",
-  apiKey: APIKEY,
+  apiKey: "keyzHxmzj69WlmN2K",
 });
 
 const base = Airtable.base("appQ41deBPSu2yoU3");
+//eslint-disable-next-line
 let page;
 export const ProductContext = createContext();
 
